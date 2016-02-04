@@ -16,8 +16,13 @@ import (
 
 func main() {
 	app := cli.App("jsonrand", "A randomised streaming json generator")
-	template := app.StringOpt("template", "", "json example")
+	template := app.StringOpt("template", "", "example json filename")
 	count := app.IntOpt("count", 1, "how many json documents to generate")
+
+	if *template == "" {
+		app.PrintHelp()
+		return
+	}
 
 	rand.Seed(time.Now().UnixNano())
 
