@@ -19,14 +19,13 @@ func main() {
 	template := app.StringOpt("template", "", "example json filename")
 	count := app.IntOpt("count", 1, "how many json documents to generate")
 
-	if *template == "" {
-		app.PrintHelp()
-		return
-	}
-
 	rand.Seed(time.Now().UnixNano())
 
 	app.Action = func() {
+		if *template == "" {
+			app.PrintHelp()
+			return
+		}
 		err := jsonrand(*template, *count)
 		if err != nil {
 			log.Fatal(err)
